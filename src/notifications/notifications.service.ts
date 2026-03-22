@@ -3,6 +3,7 @@ import { render } from '@react-email/components';
 import { EmailService } from '../email/email.service';
 import { WelcomeEmail } from '../email/templates/WelcomeEmail';
 import { PasswordResetEmail } from '../email/templates/PasswordResetEmail';
+import { EmailVerificationEmail } from '../email/templates/EmailVerificationEmail';
 
 @Injectable()
 export class NotificationsService {
@@ -25,6 +26,16 @@ export class NotificationsService {
     await this.emailService.sendEmail({
       to,
       subject: `¡Bienvenido a Finantrack, ${firstName}!`,
+      html,
+    });
+  }
+
+  async sendEmailVerification(to: string, firstName: string, verifyUrl: string) {
+    const html = await render(EmailVerificationEmail({ firstName, verifyUrl }));
+
+    await this.emailService.sendEmail({
+      to,
+      subject: 'Verificá tu email de Finantrack',
       html,
     });
   }

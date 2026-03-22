@@ -20,6 +20,18 @@ class SendWelcomeDto {
   firstName: string;
 }
 
+class SendEmailVerificationDto {
+  @IsEmail()
+  to: string;
+
+  @IsString()
+  firstName: string;
+
+  @IsString()
+  @MinLength(10)
+  verifyUrl: string;
+}
+
 @Controller('notifications')
 export class NotificationsController {
   constructor(
@@ -51,6 +63,16 @@ export class NotificationsController {
   ) {
     this.verifyApiKey(headers);
     await this.notifications.sendWelcome(dto.to, dto.firstName);
+    return { queued: true };
+  }
+
+  @Post('email-verification')
+  async emailVerification(
+    @Headers() headers: Record<string, string>,
+    @Body() dto: SendEmailVerificationDto,
+  ) {
+    this.verifyApiKey(headers);
+    await this.notifications.sendEmailVerification(dto.to, dto.firstName, dto.verifyUrl);
     return { queued: true };
   }
 }
