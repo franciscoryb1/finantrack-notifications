@@ -1,7 +1,7 @@
 import { Body, Controller, Headers, Post, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NotificationsService } from './notifications.service';
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 class SendPasswordResetDto {
   @IsEmail()
@@ -24,8 +24,9 @@ class SendEmailVerificationDto {
   @IsEmail()
   to: string;
 
+  @IsOptional()
   @IsString()
-  firstName: string;
+  firstName?: string;
 
   @IsString()
   @MinLength(10)

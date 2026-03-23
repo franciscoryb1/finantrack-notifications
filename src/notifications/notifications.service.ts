@@ -30,8 +30,8 @@ export class NotificationsService {
     });
   }
 
-  async sendEmailVerification(to: string, firstName: string, verifyUrl: string) {
-    const html = await render(EmailVerificationEmail({ firstName, verifyUrl }));
+  async sendEmailVerification(to: string, firstName: string | null | undefined, verifyUrl: string) {
+    const html = await render(EmailVerificationEmail({ firstName: firstName ?? '', verifyUrl }));
 
     await this.emailService.sendEmail({
       to,

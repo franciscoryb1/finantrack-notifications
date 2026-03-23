@@ -4,15 +4,15 @@ import { EmailLayout } from './components/EmailLayout';
 import { EmailButton } from './components/EmailButton';
 
 type Props = {
-  firstName: string;
+  firstName?: string;
   verifyUrl: string;
 };
 
 export function EmailVerificationEmail({ firstName, verifyUrl }: Props) {
   return (
-    <EmailLayout preview={`Verificá tu email de Finantrack, ${firstName}`}>
+    <EmailLayout preview="Verificá tu email de Finantrack">
 
-      <Text style={styles.greeting}>¡Hola, {firstName}! 👋</Text>
+      <Text style={styles.greeting}>{firstName ? `¡Hola, ${firstName}! 👋` : '¡Hola! 👋'}</Text>
 
       <Text style={styles.text}>
         Tu cuenta en <strong>Finantrack</strong> fue creada exitosamente.
