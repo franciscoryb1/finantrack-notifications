@@ -29,9 +29,13 @@ export function EmailLayout({ preview, children }: Props) {
           <Section style={styles.header}>
             <Row>
               <Column style={styles.logoColumn}>
-                <div style={styles.logoBox}>
-                  <span style={styles.logoLetter}>F</span>
-                </div>
+                <table style={styles.logoBox} cellPadding={0} cellSpacing={0}>
+                  <tbody>
+                    <tr>
+                      <td style={styles.logoCell}>F</td>
+                    </tr>
+                  </tbody>
+                </table>
               </Column>
               <Column>
                 <Text style={styles.brandName}>Finantrack</Text>
@@ -87,19 +91,16 @@ const styles: Record<string, React.CSSProperties> = {
     borderRadius: '6px',
     width: '28px',
     height: '28px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center' as const,
-    lineHeight: '28px',
   },
-  logoLetter: {
+  logoCell: {
     color: '#ffffff',
     fontSize: '14px',
     fontWeight: '900',
-    display: 'block',
-    lineHeight: '28px',
     textAlign: 'center' as const,
+    verticalAlign: 'middle',
+    width: '28px',
+    height: '28px',
+    lineHeight: '28px',
   },
   brandName: {
     color: '#0f172a',
