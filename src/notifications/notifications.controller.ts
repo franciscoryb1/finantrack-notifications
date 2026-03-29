@@ -1,7 +1,7 @@
 import { Body, Controller, Headers, Post, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NotificationsService } from './notifications.service';
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNumber, IsOptional, IsString, MinLength } from 'class-validator';
 
 class SendPasswordResetDto {
   @IsEmail()
@@ -10,6 +10,10 @@ class SendPasswordResetDto {
   @IsString()
   @MinLength(10)
   resetUrl: string;
+
+  @IsOptional()
+  @IsNumber()
+  notificationId?: number;
 }
 
 class SendWelcomeDto {
@@ -18,6 +22,10 @@ class SendWelcomeDto {
 
   @IsString()
   firstName: string;
+
+  @IsOptional()
+  @IsNumber()
+  notificationId?: number;
 }
 
 class SendEmailVerificationDto {
@@ -31,6 +39,10 @@ class SendEmailVerificationDto {
   @IsString()
   @MinLength(10)
   verifyUrl: string;
+
+  @IsOptional()
+  @IsNumber()
+  notificationId?: number;
 }
 
 @Controller('notifications')
@@ -53,8 +65,8 @@ export class NotificationsController {
     @Body() dto: SendPasswordResetDto,
   ) {
     this.verifyApiKey(headers);
-    await this.notifications.sendPasswordReset(dto.to, dto.resetUrl);
-    return { queued: true };
+    const jobId = await this.notifications.sendPasswordReset(dto.to, dto.resetUrl, dto.notificationId);
+    return { queued: true, jobId };
   }
 
   @Post('welcome')
@@ -63,8 +75,8 @@ export class NotificationsController {
     @Body() dto: SendWelcomeDto,
   ) {
     this.verifyApiKey(headers);
-    await this.notifications.sendWelcome(dto.to, dto.firstName);
-    return { queued: true };
+    const jobId = await this.notifications.sendWelcome(dto.to, dto.firstName, dto.notificationId);
+    return { queued: true, jobId };
   }
 
   @Post('email-verification')
@@ -73,7 +85,7 @@ export class NotificationsController {
     @Body() dto: SendEmailVerificationDto,
   ) {
     this.verifyApiKey(headers);
-    await this.notifications.sendEmailVerification(dto.to, dto.firstName, dto.verifyUrl);
-    return { queued: true };
+    const jobId = await this.notifications.sendEmailVerification(dto.to, dto.firstName, dto.verifyUrl, dto.notificationId);
+    return { queued: true, jobId };
   }
 }
