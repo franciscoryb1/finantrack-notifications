@@ -11,15 +11,11 @@ export function PasswordResetEmail({ resetUrl }: Props) {
   return (
     <EmailLayout preview="Recuperá tu contraseña de Finantrack">
 
-      <Text style={styles.title}>Recuperar contraseña</Text>
+      <Text style={styles.title}>Restablecer contraseña</Text>
 
       <Text style={styles.text}>
         Recibimos una solicitud para restablecer la contraseña de tu cuenta en{' '}
-        <strong>Finantrack</strong>.
-      </Text>
-
-      <Text style={styles.text}>
-        Hacé clic en el botón para crear una nueva contraseña:
+        <strong>Finantrack</strong>. Hacé clic en el botón para crear una nueva contraseña.
       </Text>
 
       <Section style={styles.buttonSection}>
@@ -28,13 +24,10 @@ export function PasswordResetEmail({ resetUrl }: Props) {
         </EmailButton>
       </Section>
 
-      <Section style={styles.warningBox}>
-        <Text style={styles.warningText}>
-          ⏱️ &nbsp;Este enlace expira en <strong>1 hora</strong>.
-        </Text>
-        <Text style={styles.warningText}>
-          🔒 &nbsp;Si no solicitaste restablecer tu contraseña, podés ignorar este
-          email. Tu cuenta sigue segura.
+      <Section style={styles.noteBox}>
+        <Text style={styles.noteText}>
+          Este enlace expira en <strong>1 hora</strong>.
+          Si no solicitaste restablecer tu contraseña, podés ignorar este email.
         </Text>
       </Section>
 
@@ -42,7 +35,6 @@ export function PasswordResetEmail({ resetUrl }: Props) {
   );
 }
 
-// Preview para react-email dev server
 PasswordResetEmail.PreviewProps = {
   resetUrl: 'http://localhost:3001/reset-password?token=abc123',
 } as Props;
@@ -51,7 +43,7 @@ export default PasswordResetEmail;
 
 const styles: Record<string, React.CSSProperties> = {
   title: {
-    fontSize: '22px',
+    fontSize: '20px',
     fontWeight: '700',
     color: '#0f172a',
     margin: '0 0 16px 0',
@@ -60,22 +52,19 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '15px',
     lineHeight: '1.7',
     color: '#3f3f46',
-    margin: '0 0 16px 0',
+    margin: '0 0 24px 0',
   },
   buttonSection: {
     margin: '0 0 24px 0',
   },
-  warningBox: {
-    backgroundColor: '#fafafa',
-    borderRadius: '8px',
-    border: '1px solid #e4e4e7',
-    borderLeft: '3px solid #f59e0b',
-    padding: '14px 18px',
+  noteBox: {
+    borderTop: '1px solid #e4e4e7',
+    paddingTop: '16px',
   },
-  warningText: {
+  noteText: {
     fontSize: '13px',
-    color: '#52525b',
-    margin: '0 0 6px 0',
+    color: '#a1a1aa',
+    margin: '0',
     lineHeight: '1.6',
   },
 };

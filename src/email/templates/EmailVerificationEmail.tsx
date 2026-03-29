@@ -12,11 +12,11 @@ export function EmailVerificationEmail({ firstName, verifyUrl }: Props) {
   return (
     <EmailLayout preview="Verificá tu email de Finantrack">
 
-      <Text style={styles.greeting}>{firstName ? `¡Hola, ${firstName}! 👋` : '¡Hola! 👋'}</Text>
+      <Text style={styles.title}>{firstName ? `Hola, ${firstName}` : 'Hola'}</Text>
 
       <Text style={styles.text}>
         Tu cuenta en <strong>Finantrack</strong> fue creada exitosamente.
-        Para activarla y asegurar tu acceso, verificá tu dirección de email haciendo clic en el botón de abajo.
+        Para activarla, verificá tu dirección de email haciendo clic en el botón de abajo.
       </Text>
 
       <Section style={styles.buttonSection}>
@@ -25,11 +25,9 @@ export function EmailVerificationEmail({ firstName, verifyUrl }: Props) {
         </EmailButton>
       </Section>
 
-      <Section style={styles.warningBox}>
-        <Text style={styles.warningText}>
-          ⏱ &nbsp;Este link es válido por <strong>24 horas</strong>.
-        </Text>
-        <Text style={styles.warningText}>
+      <Section style={styles.noteBox}>
+        <Text style={styles.noteText}>
+          Este link es válido por <strong>24 horas</strong>.
           Si no creaste una cuenta en Finantrack, podés ignorar este email.
         </Text>
       </Section>
@@ -46,8 +44,8 @@ EmailVerificationEmail.PreviewProps = {
 export default EmailVerificationEmail;
 
 const styles: Record<string, React.CSSProperties> = {
-  greeting: {
-    fontSize: '22px',
+  title: {
+    fontSize: '20px',
     fontWeight: '700',
     color: '#0f172a',
     margin: '0 0 16px 0',
@@ -61,17 +59,14 @@ const styles: Record<string, React.CSSProperties> = {
   buttonSection: {
     margin: '0 0 24px 0',
   },
-  warningBox: {
-    backgroundColor: '#fefce8',
-    borderRadius: '8px',
-    border: '1px solid #fde047',
-    padding: '12px 16px',
-    margin: '0',
+  noteBox: {
+    borderTop: '1px solid #e4e4e7',
+    paddingTop: '16px',
   },
-  warningText: {
+  noteText: {
     fontSize: '13px',
-    color: '#713f12',
-    margin: '0 0 6px 0',
-    lineHeight: '1.5',
+    color: '#a1a1aa',
+    margin: '0',
+    lineHeight: '1.6',
   },
 };

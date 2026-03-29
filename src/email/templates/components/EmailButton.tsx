@@ -16,7 +16,7 @@ export function EmailButton({ href, children }: Props) {
 
 const styles: Record<string, React.CSSProperties> = {
   button: {
-    backgroundColor: '#3b82f6',
+    backgroundColor: '#0f172a',
     borderRadius: '8px',
     color: '#ffffff',
     display: 'inline-block',

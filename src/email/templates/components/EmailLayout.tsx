@@ -7,6 +7,8 @@ import {
   Section,
   Text,
   Hr,
+  Row,
+  Column,
 } from '@react-email/components';
 import * as React from 'react';
 
@@ -25,11 +27,19 @@ export function EmailLayout({ preview, children }: Props) {
 
           {/* Header */}
           <Section style={styles.header}>
-            <div style={styles.logoBox}>
-              <span style={styles.logoLetter}>F</span>
-            </div>
-            <Text style={styles.brandName}>Finantrack</Text>
+            <Row>
+              <Column style={styles.logoColumn}>
+                <div style={styles.logoBox}>
+                  <span style={styles.logoLetter}>F</span>
+                </div>
+              </Column>
+              <Column>
+                <Text style={styles.brandName}>Finantrack</Text>
+              </Column>
+            </Row>
           </Section>
+
+          <Hr style={styles.headerDivider} />
 
           {/* Contenido */}
           <Section style={styles.content}>
@@ -37,13 +47,10 @@ export function EmailLayout({ preview, children }: Props) {
           </Section>
 
           {/* Footer */}
-          <Hr style={styles.hr} />
+          <Hr style={styles.footerDivider} />
           <Section style={styles.footer}>
             <Text style={styles.footerText}>
               © {new Date().getFullYear()} Finantrack. Todos los derechos reservados.
-            </Text>
-            <Text style={styles.footerText}>
-              Si no esperabas este email, podés ignorarlo de forma segura.
             </Text>
           </Section>
 
@@ -62,58 +69,64 @@ const styles: Record<string, React.CSSProperties> = {
   },
   container: {
     backgroundColor: '#ffffff',
-    borderRadius: '12px',
+    borderRadius: '8px',
     border: '1px solid #e4e4e7',
     maxWidth: '520px',
     margin: '0 auto',
     overflow: 'hidden',
   },
   header: {
-    backgroundColor: '#0f172a',
-    padding: '24px 32px',
-    display: 'flex',
-    alignItems: 'center',
+    padding: '20px 32px',
+  },
+  logoColumn: {
+    width: '36px',
+    paddingRight: '10px',
   },
   logoBox: {
-    backgroundColor: '#3b82f6',
-    borderRadius: '8px',
-    width: '36px',
-    height: '36px',
+    backgroundColor: '#0f172a',
+    borderRadius: '6px',
+    width: '28px',
+    height: '28px',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: '12px',
-    verticalAlign: 'middle',
+    textAlign: 'center' as const,
+    lineHeight: '28px',
   },
   logoLetter: {
     color: '#ffffff',
-    fontSize: '18px',
+    fontSize: '14px',
     fontWeight: '900',
-    lineHeight: '1',
+    display: 'block',
+    lineHeight: '28px',
+    textAlign: 'center' as const,
   },
   brandName: {
-    color: '#ffffff',
-    fontSize: '20px',
+    color: '#0f172a',
+    fontSize: '17px',
     fontWeight: '700',
     margin: '0',
-    display: 'inline',
-    verticalAlign: 'middle',
-    marginLeft: '12px',
+    letterSpacing: '-0.3px',
+    lineHeight: '28px',
+  },
+  headerDivider: {
+    borderColor: '#e4e4e7',
+    margin: '0',
   },
   content: {
     padding: '32px',
   },
-  hr: {
+  footerDivider: {
     borderColor: '#e4e4e7',
-    margin: '0 32px',
+    margin: '0',
   },
   footer: {
-    padding: '20px 32px',
+    padding: '16px 32px',
   },
   footerText: {
     color: '#a1a1aa',
     fontSize: '12px',
-    lineHeight: '1.6',
-    margin: '0 0 4px 0',
+    lineHeight: '1.5',
+    margin: '0',
   },
 };
