@@ -10,9 +10,6 @@ import {
   Img,
 } from '@react-email/components';
 import * as React from 'react';
-import * as fs from 'fs';
-import * as path from 'path';
-
 // Colores del tema dark de Finantrack (globals.css)
 const C = {
   bodyBg:      '#0f172a', // --background dark (slate-900)
@@ -24,22 +21,7 @@ const C = {
   textMuted:   '#94a3b8', // --muted-foreground dark (slate-400)
 };
 
-// Leído una sola vez al cargar el módulo.
-// Prueba rutas en orden: dist/public/ (Railway/prod) → cwd/public/ (preview local)
-const logoBase64 = (() => {
-  const candidates = [
-    path.join(__dirname, '..', '..', '..', 'public', 'logo-side-white.png'), // dist/public/
-    path.join(process.cwd(), 'public', 'logo-side-white.png'),               // preview local
-  ];
-  for (const logoPath of candidates) {
-    try {
-      return `data:image/png;base64,${fs.readFileSync(logoPath).toString('base64')}`;
-    } catch {
-      continue;
-    }
-  }
-  return '';
-})();
+const SELF_URL = process.env.SELF_URL ?? `http://localhost:${process.env.PORT ?? 3002}`;
 
 type Props = {
   preview: string;
@@ -57,7 +39,7 @@ export function EmailLayout({ preview, children }: Props) {
           {/* Header */}
           <Section style={styles.header}>
             <Img
-              src={logoBase64}
+              src={`${SELF_URL}/logo-side-white.png`}
               alt="Finantrack"
               height={28}
               width={110}
