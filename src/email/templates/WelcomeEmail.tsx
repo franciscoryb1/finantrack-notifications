@@ -1,6 +1,6 @@
 import { Text, Section } from '@react-email/components';
 import * as React from 'react';
-import { EmailLayout } from './components/EmailLayout';
+import { EmailLayout, C } from './components/EmailLayout';
 import { EmailButton } from './components/EmailButton';
 
 type Props = {
@@ -15,15 +15,21 @@ export function WelcomeEmail({ firstName, appUrl }: Props) {
       <Text style={styles.title}>Bienvenido, {firstName}</Text>
 
       <Text style={styles.text}>
-        Tu cuenta en <strong>Finantrack</strong> está lista. Ya podés empezar a
+        Tu cuenta en <strong style={styles.strong}>Finantrack</strong> está lista. Ya podés empezar a
         registrar tus ingresos, gastos y tarjetas de crédito en un solo lugar.
       </Text>
 
       <Section style={styles.featureList}>
-        <Text style={styles.featureItem}>Balance y movimientos en tiempo real</Text>
-        <Text style={styles.featureItem}>Gestión de tarjetas de crédito y cuotas</Text>
-        <Text style={styles.featureItem}>Gastos fijos recurrentes</Text>
-        <Text style={styles.featureItem}>Etiquetas para organizar tus movimientos</Text>
+        {[
+          'Balance y movimientos en tiempo real',
+          'Gestión de tarjetas de crédito y cuotas',
+          'Gastos fijos recurrentes',
+          'Etiquetas para organizar tus movimientos',
+        ].map((item) => (
+          <Text key={item} style={styles.featureItem}>
+            <span style={styles.featureDot}>●</span> {item}
+          </Text>
+        ))}
       </Section>
 
       <Section style={styles.buttonSection}>
@@ -49,34 +55,45 @@ export default WelcomeEmail;
 
 const styles: Record<string, React.CSSProperties> = {
   title: {
-    fontSize: '20px',
+    fontSize: '22px',
     fontWeight: '700',
-    color: '#0f172a',
+    color: C.textPrimary,
     margin: '0 0 16px 0',
+    letterSpacing: '-0.3px',
   },
   text: {
     fontSize: '15px',
     lineHeight: '1.7',
-    color: '#3f3f46',
+    color: C.textBody,
     margin: '0 0 20px 0',
   },
+  strong: {
+    color: C.textPrimary,
+  },
   featureList: {
-    borderLeft: '2px solid #e4e4e7',
-    paddingLeft: '16px',
-    margin: '0 0 24px 0',
+    backgroundColor: 'rgba(139,92,246,0.08)',
+    borderLeft: `3px solid ${C.primary}`,
+    borderRadius: '0 6px 6px 0',
+    padding: '12px 16px',
+    margin: '0 0 28px 0',
   },
   featureItem: {
     fontSize: '14px',
-    color: '#52525b',
-    margin: '0 0 8px 0',
+    color: C.textBody,
+    margin: '0 0 6px 0',
     lineHeight: '1.5',
+  },
+  featureDot: {
+    color: C.primary,
+    fontSize: '8px',
+    verticalAlign: 'middle',
   },
   buttonSection: {
     margin: '0 0 24px 0',
   },
   note: {
     fontSize: '13px',
-    color: '#a1a1aa',
+    color: C.textMuted,
     margin: '0',
   },
 };

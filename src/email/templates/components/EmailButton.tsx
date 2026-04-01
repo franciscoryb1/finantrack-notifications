@@ -16,13 +16,13 @@ export function EmailButton({ href, children }: Props) {
 
 const styles: Record<string, React.CSSProperties> = {
   button: {
-    backgroundColor: '#0f172a',
+    backgroundColor: '#8b5cf6', // violet-500 (--primary dark)
     borderRadius: '8px',
     color: '#ffffff',
     display: 'inline-block',
     fontSize: '15px',
     fontWeight: '600',
-    padding: '12px 28px',
+    padding: '13px 28px',
     textDecoration: 'none',
     textAlign: 'center',
   },

@@ -7,10 +7,34 @@ import {
   Section,
   Text,
   Hr,
-  Row,
-  Column,
+  Img,
 } from '@react-email/components';
 import * as React from 'react';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Colores del tema dark de Finantrack (globals.css)
+const C = {
+  bodyBg:      '#0f172a', // --background dark (slate-900)
+  containerBg: '#1e293b', // --card dark (slate-800)
+  border:      'rgba(255,255,255,0.1)', // --border dark
+  primary:     '#8b5cf6', // --primary dark (violet-500 ≈ brand)
+  textPrimary: '#f8fafc', // --foreground dark (slate-50)
+  textBody:    '#cbd5e1', // slate-300
+  textMuted:   '#94a3b8', // --muted-foreground dark (slate-400)
+};
+
+// Leído una sola vez al cargar el módulo.
+// LOGO_PATH permite fijar la ruta absoluta en producción (Docker, PM2, etc.)
+// Si no está definida, se asume que public/ está en el working directory.
+const logoBase64 = (() => {
+  try {
+    const logoPath = process.env.LOGO_PATH ?? path.join(process.cwd(), 'public', 'logo-side-white.png');
+    return `data:image/png;base64,${fs.readFileSync(logoPath).toString('base64')}`;
+  } catch {
+    return '';
+  }
+})();
 
 type Props = {
   preview: string;
@@ -27,23 +51,15 @@ export function EmailLayout({ preview, children }: Props) {
 
           {/* Header */}
           <Section style={styles.header}>
-            <Row>
-              <Column style={styles.logoColumn}>
-                <table style={styles.logoBox} cellPadding={0} cellSpacing={0}>
-                  <tbody>
-                    <tr>
-                      <td style={styles.logoCell}>F</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Column>
-              <Column>
-                <Text style={styles.brandName}>Finantrack</Text>
-              </Column>
-            </Row>
+            <Img
+              src={logoBase64}
+              alt="Finantrack"
+              height={28}
+              width={110}
+            />
           </Section>
 
-          <Hr style={styles.headerDivider} />
+          <Hr style={styles.divider} />
 
           {/* Contenido */}
           <Section style={styles.content}>
@@ -51,7 +67,7 @@ export function EmailLayout({ preview, children }: Props) {
           </Section>
 
           {/* Footer */}
-          <Hr style={styles.footerDivider} />
+          <Hr style={styles.divider} />
           <Section style={styles.footer}>
             <Text style={styles.footerText}>
               © {new Date().getFullYear()} Finantrack. Todos los derechos reservados.
@@ -66,68 +82,39 @@ export function EmailLayout({ preview, children }: Props) {
 
 const styles: Record<string, React.CSSProperties> = {
   body: {
-    backgroundColor: '#f4f4f5',
+    backgroundColor: C.bodyBg,
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     margin: 0,
-    padding: '32px 0',
+    padding: '40px 0',
   },
   container: {
-    backgroundColor: '#ffffff',
-    borderRadius: '8px',
-    border: '1px solid #e4e4e7',
+    backgroundColor: C.containerBg,
+    borderRadius: '12px',
+    border: `1px solid ${C.border}`,
     maxWidth: '520px',
     margin: '0 auto',
     overflow: 'hidden',
   },
   header: {
-    padding: '20px 32px',
+    padding: '24px 32px',
   },
-  logoColumn: {
-    width: '36px',
-    paddingRight: '10px',
-  },
-  logoBox: {
-    backgroundColor: '#0f172a',
-    borderRadius: '6px',
-    width: '28px',
-    height: '28px',
-  },
-  logoCell: {
-    color: '#ffffff',
-    fontSize: '14px',
-    fontWeight: '900',
-    textAlign: 'center' as const,
-    verticalAlign: 'middle',
-    width: '28px',
-    height: '28px',
-    lineHeight: '28px',
-  },
-  brandName: {
-    color: '#0f172a',
-    fontSize: '17px',
-    fontWeight: '700',
-    margin: '0',
-    letterSpacing: '-0.3px',
-    lineHeight: '28px',
-  },
-  headerDivider: {
-    borderColor: '#e4e4e7',
+  divider: {
+    borderColor: C.border,
     margin: '0',
   },
   content: {
     padding: '32px',
   },
-  footerDivider: {
-    borderColor: '#e4e4e7',
-    margin: '0',
-  },
   footer: {
     padding: '16px 32px',
   },
   footerText: {
-    color: '#a1a1aa',
+    color: C.textMuted,
     fontSize: '12px',
     lineHeight: '1.5',
     margin: '0',
+    textAlign: 'center' as const,
   },
 };
+
+export { C };
