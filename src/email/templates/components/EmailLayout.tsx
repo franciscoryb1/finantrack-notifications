@@ -25,15 +25,20 @@ const C = {
 };
 
 // Leído una sola vez al cargar el módulo.
-// LOGO_PATH permite fijar la ruta absoluta en producción (Docker, PM2, etc.)
-// Si no está definida, se asume que public/ está en el working directory.
+// Prueba rutas en orden: dist/public/ (Railway/prod) → cwd/public/ (preview local)
 const logoBase64 = (() => {
-  try {
-    const logoPath = process.env.LOGO_PATH ?? path.join(process.cwd(), 'public', 'logo-side-white.png');
-    return `data:image/png;base64,${fs.readFileSync(logoPath).toString('base64')}`;
-  } catch {
-    return '';
+  const candidates = [
+    path.join(__dirname, '..', '..', '..', 'public', 'logo-side-white.png'), // dist/public/
+    path.join(process.cwd(), 'public', 'logo-side-white.png'),               // preview local
+  ];
+  for (const logoPath of candidates) {
+    try {
+      return `data:image/png;base64,${fs.readFileSync(logoPath).toString('base64')}`;
+    } catch {
+      continue;
+    }
   }
+  return '';
 })();
 
 type Props = {
